@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+HEAD
  HEAD
 from flask import Flask, render_template
 import requests
@@ -39,7 +39,7 @@ def index():
     return render_template("index.html", distance=distance)
 
 if __name__ == "__main__":
-=======
+
  HEAD
 from flask import Flask, render_template
 import requests
@@ -80,5 +80,5 @@ def index():
     return render_template("index.html", distance=distance)
 
 if __name__ == "__main__":
->>>>>>> 84b6eb6e3df29851a8abb0372fb068d0e735f18b
+
     app.run(host="0.0.0.0", port=5000)

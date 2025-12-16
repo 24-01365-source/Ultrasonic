@@ -1,84 +1,19 @@
-<<<<<<< HEAD
- HEAD
-from flask import Flask, render_template
-import requests
-import time
+from flask import Flask, request, jsonify, render_template
 
 app = Flask(__name__)
 
-ESP32_URL = "http://192.168.1.100"  # change to ESP32 IP
+latest_distance = 0
 
 @app.route("/")
 def index():
-    try:
-        response = requests.get(ESP32_URL, timeout=1)
-        distance = response.json()["distance"]
-    except:
-        distance = "ESP32 not connected"
+    return render_template("index.html", distance=latest_distance)
 
-    return render_template("index.html", distance=distance)
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
-from flask import Flask, render_template
-import requests
-import time
-
-app = Flask(__name__)
-
-ESP32_URL = "http://192.168.1.100"  # change to ESP32 IP
-
-@app.route("/")
-def index():
-    try:
-        response = requests.get(ESP32_URL, timeout=1)
-        distance = response.json()["distance"]
-    except:
-        distance = "ESP32 not connected"
-
-    return render_template("index.html", distance=distance)
+@app.route("/update", methods=["POST"])
+def update():
+    global latest_distance
+    data = request.get_json()
+    latest_distance = data.get("distance", 0)
+    return jsonify({"status": "ok"})
 
 if __name__ == "__main__":
-=======
- HEAD
-from flask import Flask, render_template
-import requests
-import time
-
-app = Flask(__name__)
-
-ESP32_URL = "http://192.168.1.100"  # change to ESP32 IP
-
-@app.route("/")
-def index():
-    try:
-        response = requests.get(ESP32_URL, timeout=1)
-        distance = response.json()["distance"]
-    except:
-        distance = "ESP32 not connected"
-
-    return render_template("index.html", distance=distance)
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
-from flask import Flask, render_template
-import requests
-import time
-
-app = Flask(__name__)
-
-ESP32_URL = "http://192.168.1.100"  # change to ESP32 IP
-
-@app.route("/")
-def index():
-    try:
-        response = requests.get(ESP32_URL, timeout=1)
-        distance = response.json()["distance"]
-    except:
-        distance = "ESP32 not connected"
-
-    return render_template("index.html", distance=distance)
-
-if __name__ == "__main__":
->>>>>>> 84b6eb6e3df29851a8abb0372fb068d0e735f18b
-    app.run(host="0.0.0.0", port=5000)
+    app.run()
